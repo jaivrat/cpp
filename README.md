@@ -1,5 +1,13 @@
 # cpp
-Just to test some C++ codes
+Just to test some C++ codes. Checking dynamic C++ libraries search mechanism in osx
+
+1. Compile C++ codes - using 
+make -f makefile
+
+2. Above produces two libraries libsum.dylib, libadd.dylib and test.exe
+   Note that libsum.dylib itself depends on libsum.dylib.
+    
+3. I try here to tweak the paths and explore the dynamic loading mechanism.
 
 
 ```
