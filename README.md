@@ -235,10 +235,6 @@ test.exe:
 	@rpath/sum/libsum.dylib (compatibility version 0.0.0, current version 0.0.0)
 	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 400.9.0)
 	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1252.0.0)
-jvsingh: ~/work/github/cpp/dynamic-lib-test  -> ./test.exe 
- Called sum with 2 and 5
- Called add with 2 and 5
-Calculated result 7
 jvsingh: ~/work/github/cpp/dynamic-lib-test  -> otool -L ./sum/libsum.dylib 
 ./sum/libsum.dylib:
 	@rpath/sum/libsum.dylib (compatibility version 0.0.0, current version 0.0.0)
@@ -251,5 +247,63 @@ jvsingh: ~/work/github/cpp/dynamic-lib-test  -> otool -L ./add/libadd.dylib
 	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 400.9.0)
 	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1252.0.0)
 jvsingh: ~/work/github/cpp/dynamic-lib-test  -> 
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> ./test.exe 
+ Called sum with 2 and 5
+ Called add with 2 and 5
+Calculated result 7
+```
+
+#### Let us try moving executable to some complex relative paths deep inside
 
 ```
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> mkdir -p test1/test2/test3/test4
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> mv test.exe test1/test2/test3/test4/
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> ./test1/test2/test3/test4/test.exe 
+dyld: Library not loaded: @rpath/sum/libsum.dylib
+  Referenced from: /Users/jvsingh/work/github/cpp/dynamic-lib-test/./test1/test2/test3/test4/test.exe
+  Reason: image not found
+Abort trap: 6
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> mkdir -p ./test1/test2/test3/test4/sum
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> mv ./sum/libsum.dylib ./test1/test2/test3/test4/sum/
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> ./test1/test2/test3/test4/test.exe 
+dyld: Library not loaded: @rpath/sum/libsum.dylib
+  Referenced from: /Users/jvsingh/work/github/cpp/dynamic-lib-test/./test1/test2/test3/test4/test.exe
+  Reason: image not found
+Abort trap: 6
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> ls -lrt ./test1/test2/test3/test4/../../cpp/dynamic-lib-test
+ls: ./test1/test2/test3/test4/../../cpp/dynamic-lib-test: No such file or directory
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> mkdir -p  ./test1/test2/test3/test4/../../cpp/dynamic-lib-test
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> mkdir -p  ./test1/test2/test3/test4/../../cpp/dynamic-lib-test/sum
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> mv ./test1/test2/test3/test4/sum ./test1/test2/test3/test4/../../cpp/dynamic-lib-test/
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> ls -lrt ./test1/test2/test3/test4/../../cpp/dynamic-lib-test/*
+total 32
+-rwxr-xr-x  1 jvsingh  staff  15924 Jun 11 19:46 libsum.dylib
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> ./test1/test2/test3/test4/test.exe 
+dyld: Library not loaded: @rpath/add/libadd.dylib
+  Referenced from: /Users/jvsingh/work/github/cpp/dynamic-lib-test/test1/test2/cpp/dynamic-lib-test/sum/libsum.dylib
+  Reason: image not found
+Abort trap: 6
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> find ./test1/test2/test3/test4/
+./test1/test2/test3/test4/
+./test1/test2/test3/test4//test.exe
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> find ./test1/
+./test1/
+./test1//test2
+./test1//test2/cpp
+./test1//test2/cpp/dynamic-lib-test
+./test1//test2/cpp/dynamic-lib-test/sum
+./test1//test2/cpp/dynamic-lib-test/sum/libsum.dylib
+./test1//test2/test3
+./test1//test2/test3/test4
+./test1//test2/test3/test4/test.exe
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> mkdir -p ./test1//test2/cpp/dynamic-lib-test/add
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> mv ./add/libadd.dylib  ./test1//test2/cpp/dynamic-lib-test/add/
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> ./test1/test2/test3/test4/test.exe 
+ Called sum with 2 and 5
+ Called add with 2 and 5
+Calculated result 7
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> 
+
+```
+
+So it works :)
