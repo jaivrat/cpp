@@ -137,4 +137,43 @@ jvsingh: ~/work/github/cpp/dynamic-lib-test  ->
 So we see above that how @executable_path works.
 
 
+### LOADER PATH method
 
+```
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> make -f makefile.loader_path  
+Step 01 - add..
+g++ -c ./add/add.cpp -o ./add/add.o -I/add
+g++ -dynamiclib -o ./add/libadd.dylib ./add/add.o -install_name @loader_path/lib/libadd.dylib
+-------------------------------------------------------
+Step 02 - add..
+g++ -c ./sum/sum.cpp -o ./sum/sum.o -I./sum  -I./add
+g++ -dynamiclib -o ./sum/libsum.dylib ./sum/sum.o  -L./add -ladd -install_name @loader_path/lib/libsum.dylib
+-------------------------------------------------------
+Step 03 - executable..
+g++ -o  test.exe test.cpp -I./sum  -L./sum -lsum
+-------------------------------------------------------
+
+
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> otool -L test.exe 
+test.exe:
+	@loader_path/lib/libsum.dylib (compatibility version 0.0.0, current version 0.0.0)
+	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 400.9.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1252.0.0)
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> otool -L ./sum/libsum.dylib 
+./sum/libsum.dylib:
+	@loader_path/lib/libsum.dylib (compatibility version 0.0.0, current version 0.0.0)
+	@loader_path/lib/libadd.dylib (compatibility version 0.0.0, current version 0.0.0)
+	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 400.9.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1252.0.0)
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> otool -L ./add/libadd.dylib 
+./add/libadd.dylib:
+	@loader_path/lib/libadd.dylib (compatibility version 0.0.0, current version 0.0.0)
+	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 400.9.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1252.0.0)
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> ./test.exe 
+dyld: Library not loaded: @loader_path/lib/libsum.dylib
+  Referenced from: /Users/jvsingh/work/github/cpp/dynamic-lib-test/./test.exe
+  Reason: image not found
+Abort trap: 6
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> 
+```
