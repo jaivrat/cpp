@@ -2,6 +2,8 @@
 Just to test some C++ codes
 
 
+```
+	
 jvsingh: ~/work/cpp/dynamic-lib-test  -> mv test.exe  ../
 jvsingh: ~/work/cpp/dynamic-lib-test  -> cd ../
 jvsingh: ~/work/cpp  -> ./test.exe 
@@ -45,3 +47,4 @@ jvsingh: ~/work/cpp  -> ./test.exe
  Called add with 2 and 5
 Calculated result 7
 
+```
