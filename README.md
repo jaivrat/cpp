@@ -120,6 +120,19 @@ Calculated result 7
 jvsingh: ~/work/github/cpp/dynamic-lib-test  -> 
 ```
 
-
+#### Lets move whole structure to a new location:
+```
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> ./test1/test2/test.exe 
+dyld: Library not loaded: @executable_path/lib/libsum.dylib
+  Referenced from: /Users/jvsingh/work/github/cpp/dynamic-lib-test/./test1/test2/test.exe
+  Reason: image not found
+Abort trap: 6
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> mv  lib test1/test2/
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> ./test1/test2/test.exe 
+ Called sum with 2 and 5
+ Called add with 2 and 5
+Calculated result 7
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> 
+```
 
 
