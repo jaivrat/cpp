@@ -94,7 +94,7 @@ jvsingh: ~/work/github/cpp/dynamic-lib-test  ->
 
 ```
 
-### Move the libsum into desired folder:
+#### Move the libsum into desired folder:
 
 ```
 
@@ -107,9 +107,9 @@ Abort trap: 6
 jvsingh: ~/work/github/cpp/dynamic-lib-test  -> 
 ```
 
-Now, the complaint for libadd.dylib (libsum.dylib depends on libadd.dylib).
+##### Now, the complaint for libadd.dylib (libsum.dylib depends on libadd.dylib).
 
-Move libadd as well - 
+#### Move libadd as well - 
 
 ```
 jvsingh: ~/work/github/cpp/dynamic-lib-test  -> mv ./add/libadd.dylib ./lib/
