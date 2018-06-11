@@ -55,3 +55,25 @@ jvsingh: ~/work/cpp  -> ./test.exe
 Calculated result 7
 
 ```
+
+
+### Using Executable path
+compile using makefile.executable_path
+```
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> make -f makefile.executable_path
+Step 01 - add..
+g++ -c ./add/add.cpp -o ./add/add.o -I/add
+g++ -dynamiclib -o ./add/libadd.dylib ./add/add.o -install_name @executable_path/lib/libadd.dylib
+-------------------------------------------------------
+Step 02 - add..
+g++ -c ./sum/sum.cpp -o ./sum/sum.o -I./sum  -I./add
+g++ -dynamiclib -o ./sum/libsum.dylib ./sum/sum.o  -L./add -ladd -install_name @executable_path/lib/libsum.dylib
+-------------------------------------------------------
+Step 03 - executable..
+g++ -o  test.exe test.cpp -I./sum  -L./sum -lsum
+-------------------------------------------------------
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> 
+
+```
+
+
