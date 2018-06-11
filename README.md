@@ -134,5 +134,7 @@ jvsingh: ~/work/github/cpp/dynamic-lib-test  -> ./test1/test2/test.exe
 Calculated result 7
 jvsingh: ~/work/github/cpp/dynamic-lib-test  -> 
 ```
+So we see above that how @executable_path works.
+
 
 
