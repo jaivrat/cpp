@@ -27,8 +27,7 @@ dyld: Library not loaded: ./add/libadd.dylib
   Referenced from: /Users/jvsingh/work/cpp/dynamic-lib-test/sum/libsum.dylib
   Reason: image not found
 Abort trap: 6
-jvsingh: ~/work/cpp  -> otool -L ./dynamic-lib-test/sum/libsum.dyli
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/objdump: './dynamic-lib-test/sum/libsum.dyli': No such file or directory
+
 jvsingh: ~/work/cpp  -> otool -L ./dynamic-lib-test/sum/libsum.dylib
 ./dynamic-lib-test/sum/libsum.dylib:
 	./sum/libsum.dylib (compatibility version 0.0.0, current version 0.0.0)
