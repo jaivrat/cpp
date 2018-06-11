@@ -198,3 +198,13 @@ Calculated result 7
 jvsingh: ~/work/github/cpp/dynamic-lib-test  -> 
 
 ```
+As expected, the below fails - when paths are distrubed
+```
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> mv test1/test2/add test1/test2/fff
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> ./test1/test2/test.exe 
+dyld: Library not loaded: @loader_path/../add/libadd.dylib
+  Referenced from: /Users/jvsingh/work/github/cpp/dynamic-lib-test/./test1/test2/sum/libsum.dylib
+  Reason: image not found
+Abort trap: 6
+jvsingh: ~/work/github/cpp/dynamic-lib-test  ->
+```
