@@ -76,4 +76,50 @@ jvsingh: ~/work/github/cpp/dynamic-lib-test  ->
 
 ```
 
+Dependency :
+
+```
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> otool -L test.exe 
+test.exe:
+	@executable_path/lib/libsum.dylib (compatibility version 0.0.0, current version 0.0.0)
+	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 400.9.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1252.0.0)
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> 
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> ./test.exe 
+dyld: Library not loaded: @executable_path/lib/libsum.dylib
+  Referenced from: /Users/jvsingh/work/github/cpp/dynamic-lib-test/./test.exe
+  Reason: image not found
+Abort trap: 6
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> 
+
+```
+
+### Move the libsum into desired folder:
+
+```
+
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> mv ./sum/libsum.dylib ./lib/
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> ./test.exe 
+dyld: Library not loaded: @executable_path/lib/libadd.dylib
+  Referenced from: /Users/jvsingh/work/github/cpp/dynamic-lib-test/./lib/libsum.dylib
+  Reason: image not found
+Abort trap: 6
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> 
+```
+
+Now, the complaint for libadd.dylib (libsum.dylib depends on libadd.dylib).
+
+Move libadd as well - 
+
+```
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> mv ./add/libadd.dylib ./lib/
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> ./test.exe 
+ Called sum with 2 and 5
+ Called add with 2 and 5
+Calculated result 7
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> 
+```
+
+
+
 
