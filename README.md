@@ -1,6 +1,6 @@
 # cpp
 
-It is has been long time, I did C++. I got some issues while using a Machine Learning library on my MacBook Pro, which keeps on failing for dynamic linking errors. I thought to create this based on https://www.mikeash.com/pyblog/friday-qa-2009-11-06-linking-and-install-names.html
+It is has been long time, I did C++. I got some issues while using a Machine Learning library on my MacBook Pro, which keeps on failing for dynamic linking errors. I thought to create this **practical** tutorial based on https://www.mikeash.com/pyblog/friday-qa-2009-11-06-linking-and-install-names.html
 
 
 This will give you how dynamic linking to be practically utilized in C++ on Mac.
