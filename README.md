@@ -1,10 +1,14 @@
 # cpp
 
+It is has been long time, I did C++. I got some issues while using a Machine Learning library on my MacBook Pro, which keeps on failing for dynamic linking errors. I thought to create this based on https://www.mikeash.com/pyblog/friday-qa-2009-11-06-linking-and-install-names.html
 
-Ideas derived from https://www.mikeash.com/pyblog/friday-qa-2009-11-06-linking-and-install-names.html
 
-
-Just to test some C++ codes. Checking dynamic C++ libraries search mechanism in osx
+This will give you how dynamic linking to be practically utilized in C++ on Mac.
+```
+  System Version:	macOS 10.13.2 (17C88)
+  Kernel Version:	Darwin 17.3.0
+```   
+  
 
 1. Compile C++ codes - using 
 make -f makefile
