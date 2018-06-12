@@ -52,7 +52,7 @@ jvsingh: ~/work/github/cpp/dynamic-lib-test  -> otool -L ./add/libadd.dylib
 jvsingh: ~/work/github/cpp/dynamic-lib-test  -> 
 ```
     
-3. I try here to tweak the paths and explore the dynamic loading mechanism.
+3. I try here to tweak the paths and explore the dynamic loading mechanism. 
 
 
 ```
@@ -80,7 +80,12 @@ dyld: Library not loaded: ./add/libadd.dylib
   Referenced from: /Users/jvsingh/work/cpp/dynamic-lib-test/sum/libsum.dylib
   Reason: image not found
 Abort trap: 6
+```
 
+###### Hacks using **install_name_tool** to change the names of loaded libraries in the executable
+
+
+```
 jvsingh: ~/work/cpp  -> otool -L ./dynamic-lib-test/sum/libsum.dylib
 ./dynamic-lib-test/sum/libsum.dylib:
 	./sum/libsum.dylib (compatibility version 0.0.0, current version 0.0.0)
