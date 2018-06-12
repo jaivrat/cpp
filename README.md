@@ -402,4 +402,61 @@ jvsingh: ~/work/github/cpp/dynamic-lib-test  ->
 
 ```
 
+Note that rpath can also be resolved by ** DYLD_LIBRARY_PATH **
+
+```
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> make -f makefile.rpath
+Step 01 - add..
+g++ -c ./add/add.cpp -o ./add/add.o -I/add
+g++ -dynamiclib -o ./add/libadd.dylib ./add/add.o -install_name @rpath/add/libadd.dylib
+-------------------------------------------------------
+Step 02 - add..
+g++ -c ./sum/sum.cpp -o ./sum/sum.o -I./sum  -I./add
+g++ -dynamiclib -o ./sum/libsum.dylib ./sum/sum.o  -L./add -ladd -install_name @rpath/sum/libsum.dylib
+-------------------------------------------------------
+Step 03 - executable..
+g++ -o  test.exe test.cpp -I./sum  -L./sum -lsum -rpath @executable_path/../../cpp/dynamic-lib-test
+-------------------------------------------------------
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> otool -L test.exe 
+test.exe:
+	@rpath/sum/libsum.dylib (compatibility version 0.0.0, current version 0.0.0)
+	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 400.9.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1252.0.0)
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> otool -L ./sum/libsum.dylib ; otool -L ./add/libadd.dylib 
+./sum/libsum.dylib:
+	@rpath/sum/libsum.dylib (compatibility version 0.0.0, current version 0.0.0)
+	@rpath/add/libadd.dylib (compatibility version 0.0.0, current version 0.0.0)
+	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 400.9.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1252.0.0)
+./add/libadd.dylib:
+	@rpath/add/libadd.dylib (compatibility version 0.0.0, current version 0.0.0)
+	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 400.9.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1252.0.0)
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> ./test.exe 
+ Called sum with 2 and 5
+ Called add with 2 and 5
+Calculated result 7
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> mkdir -p test1/test2/test3/test4
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> ls -lrt test1/test2/test3/test4
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> mv test.exe test1/test2/test3/test4/
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> ./test1/test2/test3/test4/test.exe 
+dyld: Library not loaded: @rpath/add/libadd.dylib
+  Referenced from: /Users/jvsingh/work/github/cpp/dynamic-lib-test/sum/libsum.dylib
+  Reason: image not found
+Abort trap: 6
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> export DYLD_LIBRARY_PATH=/Users/jvsingh/work/github/cpp/dynamic-lib-test/sum
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> ./test1/test2/test3/test4/test.exe
+dyld: Library not loaded: @rpath/add/libadd.dylib
+  Referenced from: /Users/jvsingh/work/github/cpp/dynamic-lib-test/sum/libsum.dylib
+  Reason: image not found
+Abort trap: 6
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:/Users/jvsingh/work/github/cpp/dynamic-lib-test/add
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> ./test1/test2/test3/test4/test.exe
+ Called sum with 2 and 5
+ Called add with 2 and 5
+Calculated result 7
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> echo $DYLD_LIBRARY_PATH
+/Users/jvsingh/work/github/cpp/dynamic-lib-test/sum:/Users/jvsingh/work/github/cpp/dynamic-lib-test/add
+
+```
 So it works :)
