@@ -402,7 +402,7 @@ jvsingh: ~/work/github/cpp/dynamic-lib-test  ->
 
 ```
 
-Note that rpath can also be resolved by ** DYLD_LIBRARY_PATH **
+Note that rpath can also be resolved by **DYLD_LIBRARY_PATH**
 
 ```
 jvsingh: ~/work/github/cpp/dynamic-lib-test  -> make -f makefile.rpath
