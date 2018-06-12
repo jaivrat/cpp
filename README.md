@@ -64,6 +64,13 @@ dyld: Library not loaded: ./sum/libsum.dylib
   Referenced from: /Users/jvsingh/work/cpp/./test.exe
   Reason: image not found
 Abort trap: 6
+
+```
+
+###### Hacks using **install_name_tool** to change the names of loaded libraries in the executable
+
+
+```
 jvsingh: ~/work/cpp  -> otool -L test.exe 
 test.exe:
 	./sum/libsum.dylib (compatibility version 0.0.0, current version 0.0.0)
@@ -80,12 +87,7 @@ dyld: Library not loaded: ./add/libadd.dylib
   Referenced from: /Users/jvsingh/work/cpp/dynamic-lib-test/sum/libsum.dylib
   Reason: image not found
 Abort trap: 6
-```
 
-###### Hacks using **install_name_tool** to change the names of loaded libraries in the executable
-
-
-```
 jvsingh: ~/work/cpp  -> otool -L ./dynamic-lib-test/sum/libsum.dylib
 ./dynamic-lib-test/sum/libsum.dylib:
 	./sum/libsum.dylib (compatibility version 0.0.0, current version 0.0.0)
