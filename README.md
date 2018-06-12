@@ -8,9 +8,49 @@ Just to test some C++ codes. Checking dynamic C++ libraries search mechanism in 
 
 1. Compile C++ codes - using 
 make -f makefile
+```
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> make -f makefile
+Step 01 - add..
+g++ -c ./add/add.cpp -o ./add/add.o -I/add
+g++ -dynamiclib -o ./add/libadd.dylib ./add/add.o
+-------------------------------------------------------
+Step 02 - add..
+g++ -c ./sum/sum.cpp -o ./sum/sum.o -I./sum  -I./add
+g++ -dynamiclib -o ./sum/libsum.dylib ./sum/sum.o  -L./add -ladd
+-------------------------------------------------------
+Step 03 - executable..
+g++ -o  test.exe test.cpp -I./sum  -L./sum -lsum
+-------------------------------------------------------
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> ./test.exe 
+ Called sum with 2 and 5
+ Called add with 2 and 5
+Calculated result 7
+
+
+```
 
 2. Above produces two libraries libsum.dylib, libadd.dylib and test.exe
    Note that libsum.dylib itself depends on libsum.dylib.
+
+```
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> otool -L test.exe 
+test.exe:
+	./sum/libsum.dylib (compatibility version 0.0.0, current version 0.0.0)
+	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 400.9.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1252.0.0)
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> otool -L ./sum/libsum.dylib
+./sum/libsum.dylib:
+	./sum/libsum.dylib (compatibility version 0.0.0, current version 0.0.0)
+	./add/libadd.dylib (compatibility version 0.0.0, current version 0.0.0)
+	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 400.9.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1252.0.0)
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> otool -L ./add/libadd.dylib
+./add/libadd.dylib:
+	./add/libadd.dylib (compatibility version 0.0.0, current version 0.0.0)
+	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 400.9.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1252.0.0)
+jvsingh: ~/work/github/cpp/dynamic-lib-test  -> 
+```
     
 3. I try here to tweak the paths and explore the dynamic loading mechanism.
 
