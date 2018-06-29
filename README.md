@@ -1,9 +1,12 @@
 # cpp
 
-It is has been long time, I did C++. I got some issues while using a Machine Learning library on my MacBook Pro, which keeps on failing for dynamic linking errors. I thought to create this **practical** tutorial based on https://www.mikeash.com/pyblog/friday-qa-2009-11-06-linking-and-install-names.html
+Purpose: Some clarity on dynamic linking on macOS, rpath(relative path), loader_path, executable path, LD_LIBRARY_PATH and DYLD_LIBRARY_PATH
 
 
-This will give you how dynamic linking to be practically utilized in C++ on Mac.
+I got some issues while using a Machine Learning library on my MacBook Pro, which keeps on failing for C++ dynamic linking errors. I thought to create this **practical** tutorial based on https://www.mikeash.com/pyblog/friday-qa-2009-11-06-linking-and-install-names.html
+
+
+This will give you how to create library in C++, dynamically link to the executable and search paths on Mac.
 ```
   System Version:	macOS 10.13.2 (17C88)
   Kernel Version:	Darwin 17.3.0
